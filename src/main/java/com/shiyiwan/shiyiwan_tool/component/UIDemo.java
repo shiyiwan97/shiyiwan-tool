@@ -2,13 +2,12 @@ package com.shiyiwan.shiyiwan_tool.component;
 
 import com.formdev.flatlaf.FlatDarculaLaf;
 import com.formdev.flatlaf.FlatDarkLaf;
+import com.shiyiwan.shiyiwan_tool.component.entity.ApplicationContainer;
 import com.shiyiwan.shiyiwan_tool.component.menu.MenuBar;
 import com.shiyiwan.shiyiwan_tool.component.settingPanel.SettingDialog;
 import com.shiyiwan.shiyiwan_tool.component.settingPanel.TestDialog;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.plaf.basic.BasicSplitPaneDivider;
 import javax.swing.plaf.basic.BasicSplitPaneUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -74,7 +73,7 @@ public class UIDemo {
             testDialog.setVisible(true);
         });
 
-
+        ApplicationContainer.root = frame;
         // frame.add
         frame.add(menuBar, BorderLayout.NORTH);
         frame.add(splitPane, BorderLayout.CENTER);
