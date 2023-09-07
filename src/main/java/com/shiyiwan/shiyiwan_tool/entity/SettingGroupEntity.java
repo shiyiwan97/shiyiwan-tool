@@ -1,4 +1,4 @@
-package com.shiyiwan.shiyiwan_tool.component.entity;
+package com.shiyiwan.shiyiwan_tool.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

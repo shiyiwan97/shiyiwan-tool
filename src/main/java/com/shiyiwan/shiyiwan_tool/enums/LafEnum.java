@@ -1,4 +1,4 @@
-package com.shiyiwan.shiyiwan_tool.component.enums;
+package com.shiyiwan.shiyiwan_tool.enums;
 
 public enum LafEnum {
 

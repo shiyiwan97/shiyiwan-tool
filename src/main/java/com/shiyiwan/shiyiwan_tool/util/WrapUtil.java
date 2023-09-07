@@ -1,4 +1,4 @@
-package com.shiyiwan.shiyiwan_tool.component.util;
+package com.shiyiwan.shiyiwan_tool.util;
 
 import java.awt.*;
 import java.util.function.Supplier;

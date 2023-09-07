@@ -2,10 +2,10 @@ package com.shiyiwan.shiyiwan_tool.component;
 
 import com.formdev.flatlaf.FlatDarculaLaf;
 import com.formdev.flatlaf.FlatDarkLaf;
-import com.shiyiwan.shiyiwan_tool.component.entity.ApplicationContainer;
-import com.shiyiwan.shiyiwan_tool.component.menu.MenuBar;
-import com.shiyiwan.shiyiwan_tool.component.settingPanel.SettingDialog;
-import com.shiyiwan.shiyiwan_tool.component.settingPanel.TestDialog;
+import com.shiyiwan.shiyiwan_tool.entity.ApplicationContainer;
+import com.shiyiwan.shiyiwan_tool.component.menuBar.MenuBar;
+import com.shiyiwan.shiyiwan_tool.component.settingDialog.SettingDialog;
+import com.shiyiwan.shiyiwan_tool.component.settingDialog.TestDialog;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicSplitPaneUI;

@@ -1,6 +1,6 @@
-package com.shiyiwan.shiyiwan_tool.component.menu;
+package com.shiyiwan.shiyiwan_tool.component.menuBar;
 
-import com.shiyiwan.shiyiwan_tool.component.enums.BorderConst;
+import com.shiyiwan.shiyiwan_tool.enums.BorderConst;
 
 import javax.swing.*;
 import java.awt.*;

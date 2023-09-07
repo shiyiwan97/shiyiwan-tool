@@ -1,6 +1,5 @@
-package com.shiyiwan.shiyiwan_tool.component.entity;
+package com.shiyiwan.shiyiwan_tool.entity;
 
-import com.shiyiwan.shiyiwan_tool.component.enums.SettingItemEnum;
 import lombok.Data;
 
 import java.awt.*;

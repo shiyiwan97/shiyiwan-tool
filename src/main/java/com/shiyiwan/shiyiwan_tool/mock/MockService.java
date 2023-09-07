@@ -1,6 +1,6 @@
-package com.shiyiwan.shiyiwan_tool.component.mock;
+package com.shiyiwan.shiyiwan_tool.mock;
 
-import com.shiyiwan.shiyiwan_tool.component.entity.SettingGroupEntity;
+import com.shiyiwan.shiyiwan_tool.entity.SettingGroupEntity;
 
 import java.util.ArrayList;
 import java.util.List;

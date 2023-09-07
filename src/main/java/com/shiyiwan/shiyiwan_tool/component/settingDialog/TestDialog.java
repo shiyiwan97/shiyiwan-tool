@@ -1,4 +1,4 @@
-package com.shiyiwan.shiyiwan_tool.component.settingPanel;
+package com.shiyiwan.shiyiwan_tool.component.settingDialog;
 
 import com.shiyiwan.shiyiwan_tool.component.wrapper.JPanelWrapper;
 

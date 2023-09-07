@@ -1,11 +1,10 @@
-package com.shiyiwan.shiyiwan_tool.component.service;
+package com.shiyiwan.shiyiwan_tool.service;
 
-import com.shiyiwan.shiyiwan_tool.component.entity.SettingGroupEntity;
+import com.shiyiwan.shiyiwan_tool.entity.SettingGroupEntity;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;

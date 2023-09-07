@@ -1,13 +1,13 @@
-package com.shiyiwan.shiyiwan_tool.component.settingPanel;
+package com.shiyiwan.shiyiwan_tool.component.settingDialog;
 
 import com.formdev.flatlaf.FlatDarculaLaf;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.formdev.flatlaf.FlatLightLaf;
-import com.shiyiwan.shiyiwan_tool.component.entity.ApplicationContainer;
-import com.shiyiwan.shiyiwan_tool.component.entity.SettingGroupEntity;
-import com.shiyiwan.shiyiwan_tool.component.mock.MockService;
-import com.shiyiwan.shiyiwan_tool.component.service.MenuService;
+import com.shiyiwan.shiyiwan_tool.entity.ApplicationContainer;
+import com.shiyiwan.shiyiwan_tool.entity.SettingGroupEntity;
+import com.shiyiwan.shiyiwan_tool.mock.MockService;
+import com.shiyiwan.shiyiwan_tool.service.MenuService;
 import com.shiyiwan.shiyiwan_tool.component.wrapper.JPanelWrapper;
 
 import javax.swing.*;
