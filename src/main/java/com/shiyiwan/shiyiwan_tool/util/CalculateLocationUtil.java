@@ -7,6 +7,7 @@ import java.awt.*;
  */
 public class CalculateLocationUtil {
 
+    // todo 有问题
     public static Point textCenterLocation(int textWidth,int textHeight, int parentWidth, int parentHeight){
         int x = (parentWidth - textWidth) / 2;
         int y = (parentHeight - textHeight) / 2;

@@ -5,9 +5,11 @@ import lombok.Data;
 import lombok.Getter;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Data
 public class ApplicationContainer {
@@ -18,6 +20,18 @@ public class ApplicationContainer {
 
     @Getter
     public static Map<String, IService> serviceMap = new HashMap<>();
+
+    @Getter
+    public static Map<String, Font> fontMap = new HashMap<>();
+
+    public static Font getFont(String fontName){
+        return Optional.ofNullable(fontMap.get(fontName)).orElseThrow(() -> new RuntimeException("字体不存在"));
+    }
+
+    public static Font getFont(String fontName,float fontSize){
+        Font font = Optional.ofNullable(fontMap.get(fontName)).orElseThrow(() -> new RuntimeException("字体不存在"));
+        return font.deriveFont(fontSize);
+    }
 
 //    public static List<SettingGroupEntity> getSettingGroupEntityList() {
 //        return settingGroupEntityList;

@@ -5,7 +5,7 @@ import com.shiyiwan.shiyiwan_tool.enums.BorderConst;
 import javax.swing.*;
 import java.awt.*;
 
-public class MenuBar extends JMenuBar {
+public class MyMenuBar extends JMenuBar {
 
     JMenu fileMenu;
     JMenu editMenu;
@@ -17,7 +17,7 @@ public class MenuBar extends JMenuBar {
 
     public JMenuItem click;
 
-    public MenuBar() {
+    public MyMenuBar() {
         fileMenu = new JMenu("File");
         editMenu = new JMenu("Edit");
         viewMenu = new JMenu("View");
@@ -35,6 +35,7 @@ public class MenuBar extends JMenuBar {
         fileMenu.add(click);
         setBackground(new Color(60, 63, 65));
         setBorder(BorderConst.TOP_AND_BOTTOM_ONE_MATTE);
+        this.setPreferredSize(new Dimension(0, 30));
     }
 
 

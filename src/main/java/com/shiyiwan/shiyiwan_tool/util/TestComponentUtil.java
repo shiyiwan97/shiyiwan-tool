@@ -1,11 +1,14 @@
 package com.shiyiwan.shiyiwan_tool.util;
 
+import com.shiyiwan.shiyiwan_tool.service.ContainerService;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class TestComponentUtil {
 
     public static JFrame wrapComponent(Component component) {
+        ContainerService.initContainer();
         JFrame frame = new JFrame();
         frame.setLocation(1400,150);
         frame.add(component);

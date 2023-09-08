@@ -1,4 +1,4 @@
-package com.shiyiwan.shiyiwan_tool.component;
+package com.shiyiwan.shiyiwan_tool.component.bottomBar;
 
 import com.shiyiwan.shiyiwan_tool.entity.VMDataEntity;
 import com.shiyiwan.shiyiwan_tool.service.MonitorService;
@@ -18,7 +18,8 @@ public class MemoryMonitorPanel extends JComponent {
 
         double usedMemory = vmDataEntity.getUsedMemory();
         double allocatedMemory = vmDataEntity.getAllocatedMemory();
-        double maxMemory = vmDataEntity.getMaxMemory();
+//        double maxMemory = vmDataEntity.getMaxMemory();
+        double maxMemory = 550;
 
         int height = getHeight();
         int usedMemoryWidth = (int) (usedMemory / maxMemory * getWidth());
@@ -33,14 +34,18 @@ public class MemoryMonitorPanel extends JComponent {
         g.fillRect(allocatedMemoryWidth, 0, maxMemoryWidth - allocatedMemoryWidth, height);
 
         // todo 设置自定义显示 {usedMemory} 自定义显示 {maxMemory} => 1657 自定义显示 4078 表情支持 优先级非常低
-        String displayText = (int)usedMemory + " of " + (int)maxMemory + "M";
+        String displayText = (int) usedMemory + " of " + (int) maxMemory + "M";
 
+//        g.setFont(ApplicationContainer.getFont("Inter Regular", 5f));
+        g.setFont(new Font("JetBrains Mono", Font.PLAIN, 13));
         FontMetrics fontMetrics = g.getFontMetrics();
         int textWidth = fontMetrics.stringWidth(displayText);
         int textHeight = fontMetrics.getHeight();
         Point point = CalculateLocationUtil.textCenterLocation(textWidth, textHeight, getWidth(), getHeight());
-        g.setColor(Color.white);
-        g.drawString(displayText, point.x, point.y);
+
+        g.setColor(new Color(187,187,187));
+//        g.drawString(displayText, 15, 20);
+        g.drawString(displayText, point.x, 18);
 
     }
 
@@ -51,7 +56,7 @@ public class MemoryMonitorPanel extends JComponent {
         vMDataEntityWrapper[0] = vmDataEntity;
         // todo 考虑是否放入容器
         new MonitorService().startMonitorMemory(vMDataEntityWrapper);
-        this.setSize(120, 40);
+        this.setPreferredSize(new Dimension(115, 0));
     }
 
 

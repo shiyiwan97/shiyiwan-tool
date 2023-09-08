@@ -2,8 +2,9 @@ package com.shiyiwan.shiyiwan_tool.component;
 
 import com.formdev.flatlaf.FlatDarculaLaf;
 import com.formdev.flatlaf.FlatDarkLaf;
+import com.shiyiwan.shiyiwan_tool.component.bottomBar.BottomBarPanel;
+import com.shiyiwan.shiyiwan_tool.component.menuBar.MyMenuBar;
 import com.shiyiwan.shiyiwan_tool.entity.ApplicationContainer;
-import com.shiyiwan.shiyiwan_tool.component.menuBar.MenuBar;
 import com.shiyiwan.shiyiwan_tool.component.settingDialog.SettingDialog;
 import com.shiyiwan.shiyiwan_tool.component.settingDialog.TestDialog;
 
@@ -25,10 +26,17 @@ public class UIDemo {
 
     public UIDemo() {
 
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
+        gbc.weighty = 0.0;
+
         Rectangle settingDialogBounds = new Rectangle(0, 0, 800, 600);
 
         JFrame frame = new JFrame("UIDemo");
-        frame.setLayout(new BorderLayout());
+        frame.setLayout(new GridBagLayout());
 
         frame.setBounds(1150, 80, 800, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -64,19 +72,26 @@ public class UIDemo {
         testDialog.setAlwaysOnTop(false);
 
 
-        MenuBar menuBar = new MenuBar();
-        menuBar.settingMenu.addActionListener(e -> {
+        MyMenuBar myMenuBar = new MyMenuBar();
+        myMenuBar.settingMenu.addActionListener(e -> {
             settingDialog.setVisible(true);
         });
 
-        menuBar.click.addActionListener(e -> {
+        myMenuBar.click.addActionListener(e -> {
             testDialog.setVisible(true);
         });
 
+        BottomBarPanel bottomBarPanel = new BottomBarPanel();
+
         ApplicationContainer.root = frame;
         // frame.add
-        frame.add(menuBar, BorderLayout.NORTH);
-        frame.add(splitPane, BorderLayout.CENTER);
+        frame.add(myMenuBar, gbc);
+        gbc.gridy = 2;
+        frame.add(bottomBarPanel, gbc);
+        gbc.gridy = 1;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
+        frame.add(splitPane, gbc);
         frame.setVisible(true);
     }
 
