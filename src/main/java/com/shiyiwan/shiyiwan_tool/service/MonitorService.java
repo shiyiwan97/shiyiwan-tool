@@ -11,12 +11,12 @@ import java.lang.management.MemoryMXBean;
 import java.lang.management.MemoryUsage;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
 public class MonitorService implements IService {
 
     public void startMonitorMemory(VMDataEntity[] vmDataEntityWrapper) {
-        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         Runnable monitorTask = new Runnable() {
             @Override
             public void run() {
@@ -31,7 +31,7 @@ public class MonitorService implements IService {
                 vmDataEntity.setMaxMemory((int) (heapMemoryUsage.getMax() / 1024 / 1024));
             }
         };
-
+        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1, r -> new Thread(monitorTask, "Memory Monitor Thread"));
         scheduler.scheduleAtFixedRate(monitorTask, 0, 1, TimeUnit.SECONDS);
     }
 
