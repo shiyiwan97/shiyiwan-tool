@@ -9,31 +9,26 @@ public class CMDPanel1 extends JPanel {
 
     public CMDPanel1() {
         super();
-        setLayout(new FlowLayout());
+        setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
         setPreferredSize(new Dimension(500, 500));
-
+        setBackground(new Color(43, 43, 43));
 
         CMDDisplayTextArea cmdDisplayTextArea = new CMDDisplayTextArea();
-        JTextField cmdInputTextArea = new JTextField();
+        CMDInputTextArea cmdInputTextArea = new CMDInputTextArea(cmdDisplayTextArea, this);
 
-        cmdInputTextArea.addActionListener(e -> {
-            String cmd = cmdInputTextArea.getText();
-            cmdDisplayTextArea.updateContent(cmd);
-            cmdInputTextArea.setText("");
-            int perfectWidth = getParent().getWidth();
-            cmdInputTextArea.setPreferredSize(new Dimension(perfectWidth, cmdInputTextArea.getHeight()));
-            this.setPreferredSize(new Dimension(500, cmdInputTextArea.getHeight() + cmdDisplayTextArea.getHeight() + 100));
-            System.out.println(cmdInputTextArea.getSize().toString());
-        });
         this.add(cmdDisplayTextArea);
         this.add(cmdInputTextArea);
-
     }
 
     public static void main(String[] args) {
         CMDPanel1 cmdPanel1 = new CMDPanel1();
         JScrollPane jScrollPane = new JScrollPane(cmdPanel1);
         TestComponentUtil.wrapComponent(jScrollPane);
+
+        JViewport viewport = jScrollPane.getViewport();
+        CMDPanel1 component = ((CMDPanel1) viewport.getComponent(0));
+        component.getComponent(1).requestFocus();
+
     }
 
 }
