@@ -19,6 +19,7 @@ public class TestComponentUtil {
         gbc.weightx = 0;
         gbc.weighty = 0;
         frame.add(component,gbc);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 //        frame.pack();
         return frame;
     }

@@ -21,7 +21,7 @@ public class CMDDisplayTextArea extends JTextArea {
 
     public void updateContent(String content) {
         setEditable(true);
-        setText(getText() + "\n" + content);
+        append("prompt>" + content + "\n");
         setEditable(false);
         resize();
     }

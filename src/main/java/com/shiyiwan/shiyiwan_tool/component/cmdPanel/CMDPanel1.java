@@ -7,6 +7,8 @@ import java.awt.*;
 
 public class CMDPanel1 extends JPanel {
 
+    private CMDService cmdService = new CMDService();
+
     public CMDPanel1() {
         super();
         setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
@@ -18,6 +20,9 @@ public class CMDPanel1 extends JPanel {
 
         this.add(cmdDisplayTextArea);
         this.add(cmdInputTextArea);
+
+        cmdInputTextArea.setCmdService(cmdService);
+        cmdService.startWorkers(cmdDisplayTextArea, cmdInputTextArea);
     }
 
     public static void main(String[] args) {
