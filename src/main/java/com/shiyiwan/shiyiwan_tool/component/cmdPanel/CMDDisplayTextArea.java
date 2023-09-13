@@ -10,7 +10,6 @@ import java.awt.*;
  */
 public class CMDDisplayTextArea extends JTextArea {
 
-
     public CMDDisplayTextArea() {
         super();
         setEditable(false);
@@ -19,9 +18,10 @@ public class CMDDisplayTextArea extends JTextArea {
         setPreferredSize(new Dimension(0, 0));
     }
 
-    public void updateContent(String content) {
+    public void updateContent(String content, boolean wrap) {
         setEditable(true);
-        append("prompt>" + content + "\n");
+        append(content);
+        if (wrap) append("\n");
         setEditable(false);
         resize();
     }
@@ -43,12 +43,12 @@ public class CMDDisplayTextArea extends JTextArea {
         CMDDisplayTextArea component = new CMDDisplayTextArea();
         TestComponentUtil.wrapComponent(component);
         Thread.sleep(1000);
-        component.updateContent("123");
+        component.updateContent("123",true);
         System.out.println(component.getSize().toString());
         component.resize();
         System.out.println(component.getPreferredSize().toString());
         Thread.sleep(3000);
-        component.updateContent("12121212\ndkfjkdfjdf\ndfdf23232323\n231313133" + component.getPreferredSize().toString());
+        component.updateContent("12121212\ndkfjkdfjdf\ndfdf23232323\n231313133" + component.getPreferredSize().toString(),true);
         System.out.println(component.getPreferredSize().toString());
     }
 

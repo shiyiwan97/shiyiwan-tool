@@ -6,13 +6,21 @@ import java.io.*;
  * 命令行Service
  */
 public class CMDService {
-    Process cmdProcess;
-    InputStream inputStream;
-    OutputStream outputStream;
+    private final Process cmdProcess;
+    private final InputStream inputStream;
+    private final OutputStream outputStream;
 
-    public CMDService() {
+    private ReadResultWorker readResultWorker;
+
+    private final CMDDisplayTextArea cmdDisplayTextArea;
+
+    private final CMDInputTextArea cmdInputTextArea;
+
+    public CMDService(String workDirectory,CMDDisplayTextArea cmdDisplayTextArea, CMDInputTextArea cmdInputTextArea) {
+        this.cmdDisplayTextArea = cmdDisplayTextArea;
+        this.cmdInputTextArea = cmdInputTextArea;
         try {
-            cmdProcess = Runtime.getRuntime().exec("cmd");
+            cmdProcess = Runtime.getRuntime().exec("cmd", null, new File(workDirectory));
             inputStream = cmdProcess.getInputStream();
             outputStream = cmdProcess.getOutputStream();
         } catch (IOException e) {
@@ -20,8 +28,9 @@ public class CMDService {
         }
     }
 
-    public void sendCmd(String cmd) {
+    public void sendCmd(String prompt,String cmd) {
         try {
+            cmdDisplayTextArea.updateContent(prompt,false);
             outputStream.write((cmd + "\n").getBytes("UTF-8"));
             outputStream.flush();
         } catch (IOException e) {
@@ -29,30 +38,24 @@ public class CMDService {
         }
     }
 
-    public void startWorkers(CMDDisplayTextArea cmdDisplayTextArea, CMDInputTextArea cmdInputTextArea) {
-        new PrintWorker(cmdDisplayTextArea, inputStream).execute();
-        new PromptWorker(cmdInputTextArea).execute();
+    public void startWorkers() {
+        readResultWorker = new ReadResultWorker(cmdInputTextArea, cmdDisplayTextArea, inputStream);
+        readResultWorker.execute();
+    }
 
-        new Thread(() -> {
-            while (true) {
-                BufferedReader bufferedReader = null;
-                try {
-                    bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "GB2312"));
-                    String content;
-                    if ((content = bufferedReader.readLine()) != null) {
-                        System.out.println(content);
-                        cmdDisplayTextArea.updateContent(content);
-                    }
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }).start();
-
+    public void stopWorkers() {
+        cmdProcess.destroy();
+        readResultWorker.setWork(false);
+        try {
+            if (inputStream != null) inputStream.close();
+            if (outputStream != null) outputStream.close();
+        } catch (IOException e) {
+            throw new RuntimeException("无法关闭输入输出流\n" + e.getStackTrace());
+        }
     }
 
     public static void main(String[] args) {
-        CMDService cmdService = new CMDService();
-        cmdService.sendCmd("dir");
+        CMDService cmdService = new CMDService("C:\\Users\\shiyiwan",null,null);
+        cmdService.sendCmd("prompt","dir");
     }
 }

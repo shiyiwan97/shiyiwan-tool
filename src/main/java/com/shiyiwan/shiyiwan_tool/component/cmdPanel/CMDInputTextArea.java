@@ -23,8 +23,16 @@ public class CMDInputTextArea extends JTextArea {
 
     private String prompt = "";
 
+    private int length;
+
+    private final CMDPanel1 cmdPanel;
+
+    CMDDisplayTextArea cmdDisplayTextArea;
+
     public CMDInputTextArea(CMDDisplayTextArea cmdDisplayTextArea, CMDPanel1 cmdPanel) {
 
+        this.cmdDisplayTextArea = cmdDisplayTextArea;
+        this.cmdPanel = cmdPanel;
         setCaretPosition(getText().length());
 
         Font font = getFont();
@@ -43,32 +51,7 @@ public class CMDInputTextArea extends JTextArea {
         setForeground(Color.white);
         setCaretColor(Color.white);
 
-        addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                // 不能改动prompt
-                if (getCaretPosition() <= prompt.length()) {
-                    e.consume();
-                    setCaretPosition(getText().length());
-                    setEditable(true);
-                }
-
-                if (e.getKeyChar() == KeyEvent.VK_ENTER || e.getKeyChar() == '\n') {
-                    e.consume();
-                    String cmd = getText();
-                    cmd = cmd.substring(prompt.length());
-                    if (cmd.length() == 1) return;
-                    cmdService.sendCmd(cmd);
-                    setText(prompt);
-                    int perfectWidth = getParent().getWidth();
-                    setPreferredSize(new Dimension(perfectWidth, getHeight()));
-                    cmdPanel.setPreferredSize(new Dimension(500, getHeight() + cmdDisplayTextArea.getHeight() + 100));
-                    setCaretPosition(getText().length());
-                    requestFocusInWindow();
-                }
-            }
-
-        });
+        addKeyListener(new PromptReadOnlyKeyAdapter());
 
         addMouseListener(new MouseAdapter() {
             @Override
@@ -84,16 +67,53 @@ public class CMDInputTextArea extends JTextArea {
 
     }
 
-    public void setPrompt(String prompt){
+    public void setPrompt(String prompt) {
         this.prompt = prompt;
         setText(prompt);
-        setCaretPosition(getText().length());
+        int newLength = getText().length();
+        if(newLength != length){
+            length = newLength;
+            removeKeyListener(getKeyListeners()[0]);
+            addKeyListener(new PromptReadOnlyKeyAdapter());
+        }
+        setCaretPosition(newLength);
     }
 
-    public void setCmdService(CMDService cmdService){
+    public void setCmdService(CMDService cmdService) {
         this.cmdService = cmdService;
     }
 
+    class PromptReadOnlyKeyAdapter extends KeyAdapter {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                // 不能改动prompt
+                if (getCaretPosition() < length) {
+                    e.consume();
+                    setCaretPosition(getText().length());
+                    setEditable(true);
+                    return;
+                }
+                setEditable(true);
+
+                if (e.getKeyChar() == KeyEvent.VK_ENTER || e.getKeyChar() == '\n') {
+                    e.consume();
+                    String cmd = getText();
+                    cmd = cmd.substring(prompt.length());
+                    if (cmd.isEmpty()) return;
+                    cmdService.sendCmd(prompt,cmd);
+                    setText(null);
+                    setEditable(false);
+//                    setText(prompt);
+//                    int perfectWidth = getParent().getWidth();
+//                    setPreferredSize(new Dimension(perfectWidth, getHeight()));
+//                    cmdPanel.setPreferredSize(new Dimension(500, getHeight() + cmdDisplayTextArea.getHeight() + 100));
+//                    setCaretPosition(length);
+                    requestFocusInWindow();
+                }
+            }
+
+
+    }
     public static void main(String[] args) {
         TestComponentUtil.wrapComponent(new CMDInputTextArea(new CMDDisplayTextArea(), new CMDPanel1()));
     }
