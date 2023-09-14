@@ -10,27 +10,32 @@ public class CMDService {
     private final InputStream inputStream;
     private final OutputStream outputStream;
 
+    private final InputStream errorStream;
+
     private ReadResultWorker readResultWorker;
+
+    private ReadErrorWorker readErrorWorker;
 
     private final CMDDisplayTextArea cmdDisplayTextArea;
 
     private final CMDInputTextArea cmdInputTextArea;
 
-    public CMDService(String workDirectory,CMDDisplayTextArea cmdDisplayTextArea, CMDInputTextArea cmdInputTextArea) {
+    public CMDService(String workDirectory, CMDDisplayTextArea cmdDisplayTextArea, CMDInputTextArea cmdInputTextArea) {
         this.cmdDisplayTextArea = cmdDisplayTextArea;
         this.cmdInputTextArea = cmdInputTextArea;
         try {
             cmdProcess = Runtime.getRuntime().exec("cmd", null, new File(workDirectory));
             inputStream = cmdProcess.getInputStream();
             outputStream = cmdProcess.getOutputStream();
+            errorStream = cmdProcess.getErrorStream();
         } catch (IOException e) {
             throw new RuntimeException("无法启动cmd\n" + e.getStackTrace());
         }
     }
 
-    public void sendCmd(String prompt,String cmd) {
+    public void sendCmd(String prompt, String cmd) {
         try {
-            cmdDisplayTextArea.updateContent(prompt,false);
+            cmdDisplayTextArea.updateContent(prompt, false);
             outputStream.write((cmd + "\n").getBytes("UTF-8"));
             outputStream.flush();
         } catch (IOException e) {
@@ -40,7 +45,9 @@ public class CMDService {
 
     public void startWorkers() {
         readResultWorker = new ReadResultWorker(cmdInputTextArea, cmdDisplayTextArea, inputStream);
+        readErrorWorker = new ReadErrorWorker(cmdInputTextArea, cmdDisplayTextArea, errorStream);
         readResultWorker.execute();
+        readErrorWorker.execute();
     }
 
     public void stopWorkers() {
@@ -55,7 +62,7 @@ public class CMDService {
     }
 
     public static void main(String[] args) {
-        CMDService cmdService = new CMDService("C:\\Users\\shiyiwan",null,null);
-        cmdService.sendCmd("prompt","dir");
+        CMDService cmdService = new CMDService("C:\\Users\\shiyiwan", null, null);
+        cmdService.sendCmd("prompt", "dir");
     }
 }

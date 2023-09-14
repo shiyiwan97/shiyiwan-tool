@@ -6,12 +6,13 @@ import javax.swing.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * CMD提示区域
  */
-public class ReadResultWorker extends SwingWorker<String, String> {
+public class ReadErrorWorker extends SwingWorker<String, String> {
 
     @Setter
     private boolean work = true;
@@ -20,14 +21,12 @@ public class ReadResultWorker extends SwingWorker<String, String> {
 
     private final CMDDisplayTextArea cmdDisplayTextArea;
 
-    private final InputStream inputStream;
+    private final InputStream errorStream;
 
-    boolean first = true;
-
-    public ReadResultWorker(CMDInputTextArea cmdInputTextArea, CMDDisplayTextArea cmdDisplayTextArea, InputStream inputStream) {
+    public ReadErrorWorker(CMDInputTextArea cmdInputTextArea, CMDDisplayTextArea cmdDisplayTextArea, InputStream errorStream) {
         super();
         this.cmdInputTextArea = cmdInputTextArea;
-        this.inputStream = inputStream;
+        this.errorStream = errorStream;
         this.cmdDisplayTextArea = cmdDisplayTextArea;
 
     }
@@ -42,17 +41,16 @@ public class ReadResultWorker extends SwingWorker<String, String> {
 
     public void readResult() {
         try {
-            InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "GBK");
+            InputStreamReader inputStreamReader = new InputStreamReader(errorStream, "GBK");
             char[] buf = new char[1024];
             int size;
             while ((size = inputStreamReader.read(buf)) != -1) {
                 String result = new String(buf, 0, size);
                 String[] resultArray = result.split("\n");
-                publish(resultArray);
-                if (first) {
-                    first = false;
-                    break;
-                }
+                String[] appendBlank = Arrays.copyOf(resultArray, resultArray.length + 1);
+                appendBlank[resultArray.length] = " \r";
+                System.out.println("error: " + result);
+                publish(appendBlank);
             }
         } catch (IOException e) {
             throw new RuntimeException("读取cmd执行结果失败");
@@ -62,16 +60,8 @@ public class ReadResultWorker extends SwingWorker<String, String> {
     @Override
     protected void process(List<String> chunks) {
         for (String result : chunks) {
-            if (isWorkDirectory(result)) {
-                cmdInputTextArea.setPrompt(result);
-            } else {
-                cmdDisplayTextArea.updateContent(result, true);
-            }
+            cmdDisplayTextArea.updateContent(result, true);
         }
-    }
-
-    private boolean isWorkDirectory(String text) {
-        return Character.isLetter(text.charAt(0)) && text.charAt(1) == ':';
     }
 
 }

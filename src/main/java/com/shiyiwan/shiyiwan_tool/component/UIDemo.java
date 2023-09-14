@@ -4,6 +4,7 @@ import com.formdev.flatlaf.FlatDarculaLaf;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.shiyiwan.shiyiwan_tool.component.bottomBar.BottomBarPanel;
 import com.shiyiwan.shiyiwan_tool.component.menuBar.MyMenuBar;
+import com.shiyiwan.shiyiwan_tool.component.popMenu.WorkSpacePopupMenu;
 import com.shiyiwan.shiyiwan_tool.entity.ApplicationContainer;
 import com.shiyiwan.shiyiwan_tool.component.settingDialog.SettingDialog;
 import com.shiyiwan.shiyiwan_tool.component.settingDialog.TestDialog;
@@ -11,7 +12,7 @@ import com.shiyiwan.shiyiwan_tool.component.settingDialog.TestDialog;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicSplitPaneUI;
 import java.awt.*;
-import java.awt.event.ActionEvent;
+import java.awt.event.*;
 
 public class UIDemo {
 
@@ -65,8 +66,26 @@ public class UIDemo {
         };
         settingDialog.getRootPane().registerKeyboardAction(actionListener, stroke, JComponent.WHEN_IN_FOCUSED_WINDOW);
 
+        // 退出时确认的弹框
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                JOptionPane.showOptionDialog(frame,"Confirm Exit\nAre you sure you want to exit",null,JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,null,null);
+            }
+        });
 
-
+        // 工作区打开cmd
+        rightJPanel.setLayout(new BorderLayout());
+        WorkSpacePopupMenu workSpacePopupMenu = new WorkSpacePopupMenu(rightJPanel);
+        rightJPanel.add(workSpacePopupMenu);
+        rightJPanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON3) {
+                    workSpacePopupMenu.show(rightJPanel,e.getX(), e.getY());
+                }
+            }
+        });
 
         TestDialog testDialog = new TestDialog(settingDialogBounds);
         testDialog.setAlwaysOnTop(false);
