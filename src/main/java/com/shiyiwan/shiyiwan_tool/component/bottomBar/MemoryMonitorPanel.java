@@ -12,14 +12,20 @@ public class MemoryMonitorPanel extends JComponent {
 
     private VMDataEntity vmDataEntity;
 
+    private double usedMemory;
+
+    private double allocatedMemory;
+
+    private double maxMemory;
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        double usedMemory = vmDataEntity.getUsedMemory();
-        double allocatedMemory = vmDataEntity.getAllocatedMemory();
+        usedMemory = vmDataEntity.getUsedMemory();
+        allocatedMemory = vmDataEntity.getAllocatedMemory();
 //        double maxMemory = vmDataEntity.getMaxMemory();
-        double maxMemory = 550;
+        maxMemory = 550;
 
         int height = getHeight();
         int usedMemoryWidth = (int) (usedMemory / maxMemory * getWidth());
@@ -43,7 +49,7 @@ public class MemoryMonitorPanel extends JComponent {
         int textHeight = fontMetrics.getHeight();
         Point point = CalculateLocationUtil.textCenterLocation(textWidth, textHeight, getWidth(), getHeight());
 
-        g.setColor(new Color(187,187,187));
+        g.setColor(new Color(187, 187, 187));
 //        g.drawString(displayText, 15, 20);
         g.drawString(displayText, point.x, 18);
 
@@ -57,6 +63,9 @@ public class MemoryMonitorPanel extends JComponent {
         // todo 考虑是否放入容器
         new MonitorService().startMonitorMemory(vMDataEntityWrapper);
         this.setPreferredSize(new Dimension(115, 0));
+
+        this.setToolTipText("Max Heap Size:" + maxMemory + "\nAllocated:    " + allocatedMemory +
+                "\nUsed:         " + usedMemory);
     }
 
 
