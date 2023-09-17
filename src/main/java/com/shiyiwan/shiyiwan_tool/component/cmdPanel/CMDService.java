@@ -36,6 +36,7 @@ public class CMDService {
     public void sendCmd(String prompt, String cmd) {
         try {
             cmdDisplayTextArea.updateContent(prompt, false);
+            cmdInputTextArea.afterSendCmd();
             outputStream.write((cmd + "\n").getBytes("UTF-8"));
             outputStream.flush();
         } catch (IOException e) {

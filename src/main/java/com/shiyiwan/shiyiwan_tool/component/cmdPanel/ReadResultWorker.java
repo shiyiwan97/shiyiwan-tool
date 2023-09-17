@@ -64,6 +64,7 @@ public class ReadResultWorker extends SwingWorker<String, String> {
         for (String result : chunks) {
             if (isWorkDirectory(result)) {
                 cmdInputTextArea.setPrompt(result);
+                cmdInputTextArea.setCaretPosition(result.length());
             } else {
                 cmdDisplayTextArea.updateContent(result, true);
             }
