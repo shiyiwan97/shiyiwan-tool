@@ -17,8 +17,13 @@ public class WorkSpacePopupMenu extends PopupMenu {
         this.add(cmd);
         cmd.addActionListener(e -> {
             CMDPanel1 cmdPanel1 = new CMDPanel1();
+//            targetPanel.setLayout(new BorderLayout());
+            Dimension size = targetPanel.getSize();
+            System.out.println(size);
+            cmdPanel1.setBounds(0, 0, size.width, size.height);
             targetPanel.add(cmdPanel1);
             targetPanel.repaint();
+            System.out.println(targetPanel.getSize());
         });
     }
 

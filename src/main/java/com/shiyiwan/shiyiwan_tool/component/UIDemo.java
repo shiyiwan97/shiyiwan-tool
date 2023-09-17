@@ -42,17 +42,24 @@ public class UIDemo {
         frame.setBounds(1150, 80, 800, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JSplitPane splitPane = new JSplitPane();
-        splitPane.setUI(new BasicSplitPaneUI());
-        splitPane.setBounds(0, 0, 800, 600);
-
-
-        JPanel leftJPanel = new JPanel();
-        leftJPanel.setBackground(new Color(60, 63, 65));
-        JPanel rightJPanel = new JPanel();
-        rightJPanel.setBackground(new Color(43, 43, 43));
-        splitPane.setLeftComponent(leftJPanel);
-        splitPane.setRightComponent(rightJPanel);
+        // 工作区
+//        JSplitPane splitPane = new JSplitPane();
+//        splitPane.setUI(new BasicSplitPaneUI());
+////        splitPane.setBounds(0, 0, 800, 600);
+//
+//        // 工作区左侧面板
+//        JPanel leftJPanel = new JPanel();
+//        leftJPanel.setBackground(new Color(60, 63, 65));
+////        leftJPanel.setBackground(Color.BLUE);
+//        leftJPanel.setBorder(BorderConst.RIGHT_MATTE);
+//
+//        JPanel rightJPanel = new JPanel();
+////        rightJPanel.setBackground(new Color(43, 43, 43));
+//        rightJPanel.setBackground(Color.white);
+//        rightJPanel.setMinimumSize(new Dimension(0,0));
+//        splitPane.setLeftComponent(leftJPanel);
+//        splitPane.setRightComponent(rightJPanel);
+        WorkSpaceSplitPane splitPane = new WorkSpaceSplitPane();
 
         SettingDialog settingDialog = new SettingDialog(frame,settingDialogBounds);
         settingDialog.setAlwaysOnTop(false);
@@ -74,19 +81,6 @@ public class UIDemo {
             }
         });
 
-        // 工作区打开cmd
-        rightJPanel.setLayout(new BorderLayout());
-        WorkSpacePopupMenu workSpacePopupMenu = new WorkSpacePopupMenu(rightJPanel);
-        rightJPanel.add(workSpacePopupMenu);
-        rightJPanel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getButton() == MouseEvent.BUTTON3) {
-                    workSpacePopupMenu.show(rightJPanel,e.getX(), e.getY());
-                }
-            }
-        });
-
         TestDialog testDialog = new TestDialog(settingDialogBounds);
         testDialog.setAlwaysOnTop(false);
 
@@ -100,6 +94,7 @@ public class UIDemo {
             testDialog.setVisible(true);
         });
 
+        // 底部状态栏
         BottomBarPanel bottomBarPanel = new BottomBarPanel();
 
         ApplicationContainer.root = frame;
@@ -112,6 +107,16 @@ public class UIDemo {
         gbc.fill = GridBagConstraints.BOTH;
         frame.add(splitPane, gbc);
         frame.setVisible(true);
+
+        // ui检视，展示所有组件大小，背景颜色等
+        new Thread(() ->{
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+        }).start();
     }
 
     public static void main(String[] args) {

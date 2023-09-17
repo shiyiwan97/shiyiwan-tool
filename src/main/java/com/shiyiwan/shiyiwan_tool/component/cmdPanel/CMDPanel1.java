@@ -1,9 +1,12 @@
 package com.shiyiwan.shiyiwan_tool.component.cmdPanel;
 
 import com.shiyiwan.shiyiwan_tool.util.TestComponentUtil;
+import lombok.Getter;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
@@ -12,14 +15,19 @@ public class CMDPanel1 extends JPanel {
 
     private CMDService cmdService;
 
+    @Getter
+    private CMDDisplayTextArea cmdDisplayTextArea;
+
+    private CMDInputTextArea cmdInputTextArea;
+
     public CMDPanel1() {
         super();
         setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        setPreferredSize(new Dimension(500, 500));
-        setBackground(new Color(43, 43, 43));
+//        setPreferredSize(new Dimension(500, 500));
+//        setBackground(new Color(43, 43, 43));
 
-        CMDDisplayTextArea cmdDisplayTextArea = new CMDDisplayTextArea();
-        CMDInputTextArea cmdInputTextArea = new CMDInputTextArea(cmdDisplayTextArea, this);
+        cmdDisplayTextArea = new CMDDisplayTextArea();
+        cmdInputTextArea = new CMDInputTextArea(cmdDisplayTextArea, this);
 
         this.add(cmdDisplayTextArea);
         this.add(cmdInputTextArea);
@@ -34,6 +42,19 @@ public class CMDPanel1 extends JPanel {
         }
         cmdService.startWorkers();
 
+        // 点击面板获得焦点
+        this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                cmdInputTextArea.requestFocus();
+            }
+        });
+    }
+
+    public void resizeByParentChange(int width){
+        this.setPreferredSize(new Dimension(width, this.getHeight()));
+        cmdDisplayTextArea.resizeByParentChange(width);
+        cmdInputTextArea.resizeByParentChange(width);
     }
 
     public static void main(String[] args) throws InterruptedException {
