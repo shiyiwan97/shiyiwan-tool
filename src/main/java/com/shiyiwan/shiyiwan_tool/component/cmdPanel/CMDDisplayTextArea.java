@@ -78,7 +78,8 @@ public class CMDDisplayTextArea extends JTextArea {
             lineCount += needWidth / width + add;
         }
 
-        setPreferredSize(new Dimension(width, lineCount * lineHeight + verticalInsets));
+//        setPreferredSize(new Dimension(width, lineCount * lineHeight + verticalInsets));
+        setSize(new Dimension(width, lineCount * lineHeight + verticalInsets));
         repaint();
     }
 

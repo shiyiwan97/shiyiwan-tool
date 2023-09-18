@@ -1,5 +1,6 @@
 package com.shiyiwan.shiyiwan_tool.entity;
 
+import com.shiyiwan.shiyiwan_tool.component.cmdPanel.CMDService;
 import com.shiyiwan.shiyiwan_tool.service.IService;
 import lombok.Data;
 import lombok.Getter;
@@ -23,6 +24,9 @@ public class ApplicationContainer {
 
     @Getter
     public static Map<String, Font> fontMap = new HashMap<>();
+
+    @Getter
+    public static Map<String, CMDService> cmdServerMap = new HashMap<>();
 
     public static Font getFont(String fontName){
         return Optional.ofNullable(fontMap.get(fontName)).orElseThrow(() -> new RuntimeException("字体不存在"));

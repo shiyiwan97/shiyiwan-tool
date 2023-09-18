@@ -33,7 +33,7 @@ public class CMDService {
         }
     }
 
-    public void sendCmd(String prompt, String cmd) {
+    public void sendCommand(String prompt, String cmd) {
         try {
             cmdDisplayTextArea.updateContent(prompt, false);
             cmdInputTextArea.afterSendCmd();
@@ -64,6 +64,6 @@ public class CMDService {
 
     public static void main(String[] args) {
         CMDService cmdService = new CMDService("C:\\Users\\shiyiwan", null, null);
-        cmdService.sendCmd("prompt", "dir");
+        cmdService.sendCommand("prompt", "dir");
     }
 }

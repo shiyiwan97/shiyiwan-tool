@@ -1,7 +1,5 @@
 package com.shiyiwan.shiyiwan_tool.component.cmdPanel;
 
-import com.shiyiwan.shiyiwan_tool.util.TestComponentUtil;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -141,7 +139,7 @@ public class CMDInputTextArea extends JTextArea {
                 String cmd = getText();
                 cmd = cmd.substring(prompt.length());
                 if (cmd.isEmpty()) return;
-                cmdService.sendCmd(prompt, cmd);
+                cmdService.sendCommand(prompt, cmd);
 //                setText(null);
 //                setEditable(false);
 //                int perfectWidth = getParent().getWidth();
