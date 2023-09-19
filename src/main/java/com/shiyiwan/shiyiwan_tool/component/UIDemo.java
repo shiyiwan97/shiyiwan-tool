@@ -36,11 +36,11 @@ public class UIDemo {
 
         Rectangle settingDialogBounds = new Rectangle(0, 0, 800, 600);
 
-        JFrame frame = new JFrame("UIDemo");
+        JFrame frame = new JFrame("ShiYiWan CMD Util");
         frame.setLayout(new GridBagLayout());
 
         frame.setBounds(1150, 80, 800, 600);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
         // 工作区
 //        JSplitPane splitPane = new JSplitPane();
@@ -77,7 +77,10 @@ public class UIDemo {
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                JOptionPane.showOptionDialog(frame,"Confirm Exit\nAre you sure you want to exit",null,JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,null,null);
+                int clickButtonIndex = JOptionPane.showOptionDialog(frame, "Confirm Exit\nAre you sure you want to exit", null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+                if (clickButtonIndex == JOptionPane.YES_OPTION) {
+                    System.exit(0);
+                }
             }
         });
 
